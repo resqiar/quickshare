@@ -1,0 +1,15 @@
+{
+  "name": "beligenteng",
+  "module": ".",
+  "type": "module",
+  "devDependencies": {
+    "bun-types": "latest",
+    "daisyui": "latest"
+  },
+  "scripts": {
+    "dev": "bun tailwindcss -i ./views/public/global.css -o ./views/public/output.css --watch"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

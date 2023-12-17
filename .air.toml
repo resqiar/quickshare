@@ -1,0 +1,10 @@
+[build]
+send_interrupt = true
+delay = 1000
+kill_delay = 500      # 500 ms
+
+exclude_dir = ["database/migrations", "tmp", "views/public", "node_modules"]
+
+[misc]
+# Delete tmp directory on exit
+clean_on_exit = true
