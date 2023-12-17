@@ -9,7 +9,95 @@
         <script src="/static/htmx.min.js"></script>
     </head>
 
-    <body>
-        <h1>Hello World!</h1>
+    <body class="my-10">
+        <main class="mx-4 my-6 lg:mx-24 flex flex-col lg:flex-row justify-between">
+            <section class="lg:max-w-[90%] px-12">
+                <div>
+                    <h1 class="text-4xl font-bold">Quickshare</h1>
+                    <h2 class="mt-2 text-justify">
+                        Transform your markdown file into either Public Page or download it directly as HTML.
+                        Whether you're uploading a <strong>.md</strong> file or directly
+                        pasting markdown text, the parser will converts your content into
+                        HTML. You can copy the generated HTML or download it as you wish.
+                    </h2>
+                </div>
+
+                <div class="flex flex-col gap-2 mt-8">
+                    <h1 class="font-bold">Upload File</h1>
+
+                    <div id="drop-area" class="hover:border-black cursor-pointer border-dashed border-2 border-slate-500 rounded py-6 px-24">
+                        <form>
+                            <div class="flex flex-col items-center justify-center">
+                                <p class="font-bold">Click or drop file here</p>
+                                <p class="text-sm">only .txt and .md file will be accepted</p>
+                                <p class="text-sm text-red-500" id="dropzone-error"></p>
+                            </div>
+                            <input class="hidden" type="file" id="file-input" accept=".txt,.md" />
+                        </form>
+                    </div>
+                </div>
+
+                <div class="divider my-8 text-slate-500">OR</div>
+
+                <div class="flex flex-col gap-2">
+                    <h1 class="font-bold">Paste Markdown</h1>
+
+                    <textarea
+                        id="content"
+                        class="textarea textarea-bordered textarea-primary"
+                        placeholder="Paste Markdown Here"
+                        rows="10"
+                    ></textarea>
+
+                    <label class="label" for="content">
+                        <p class="label-text-alt">
+                            <span id="content-length">0</span>/15000
+                        </p>
+                    </label>
+                </div>
+            </section>
+
+            <aside class="lg:w-[50%] flex flex-col gap-4">
+                <div
+                    class="flex w-full flex-col items-center justify-center rounded-lg bg-base-300 p-2 shadow-xl"
+                >
+                    <h2 class="mt-2 font-semibold">Quickshare as a Page</h2>
+                    <p class="mt-1 mx-1 text-center text-xs italic">
+                        Your record will be saved until expiration time and you can share it publicly.
+                    </p>
+
+                    <div class="my-2 flex w-full flex-col gap-2 px-4">
+                        <button
+                            class="btn btn-sm btn-primary w-full gap-2 rounded-full text-sm font-normal normal-case"
+                        >
+                            Share as a
+                            <span class="font-semibold text-amber-300">Page</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div
+                    class="flex w-full flex-col items-center justify-center rounded-lg bg-base-200 p-2 shadow-xl"
+                >
+                    <h2 class="mt-2 font-semibold">Download as HTML?</h2>
+                    <p class="mt-1 mx-1 text-center text-xs italic">
+                        Your input will be processed on-demand and never stored
+                        anywhere.
+                    </p>
+
+                    <div class="my-2 flex w-full flex-col gap-2 px-4">
+                        <button
+                            class="group btn btn-sm btn-outline btn-primary w-full gap-2 rounded-full text-sm font-normal normal-case"
+                        >
+                            Download to
+                            <span class="font-semibold group-hover:text-amber-300">HTML</span>
+                        </button>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <script src="static/main.o.js"></script>
     </body>
+
 </html>
