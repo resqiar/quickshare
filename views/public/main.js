@@ -1,18 +1,30 @@
+function debounce(func, timeout) {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    };
+}
+
 let content = "";
 
 const dropzoneArea = document.getElementById("drop-area");
 const hiddenDropzone = document.getElementById("file-input");
 const errorDropzone = document.getElementById("dropzone-error");
-
 const inputArea = document.getElementById("content");
 const contentLength = document.getElementById("content-length");
+const previewArea = document.getElementById("preview");
 
 dropzoneArea.addEventListener("click", () => hiddenDropzone.click());
 hiddenDropzone.addEventListener("change", (e) => handleDrop(e, true));
+
 inputArea.addEventListener("input", () => {
     content = inputArea.value;
     contentLength.innerText = content.length;
 });
+
+let debouncedPreview = debounce(() => handlePreview(), 300);
+inputArea.addEventListener("input", debouncedPreview);
 
 const all_events = ["dragenter", "dragover", "dragleave", "drop"];
 const enter_events = ["dragenter", "dragover"];
@@ -60,6 +72,7 @@ function parseFile(file) {
         if (result !== null && result !== "") {
             content = result;
             updateInput();
+            handlePreview();
         }
     });
 
@@ -69,4 +82,34 @@ function parseFile(file) {
 function updateInput() {
     inputArea.value = content;
     contentLength.innerText = content.length;
+}
+
+async function handlePreview() {
+    if (!content) return previewArea.innerHTML = " ";
+
+    try {
+        const blob = new Blob([content], {
+            type: "application/octet-stream",
+        });
+
+        const req = await fetch(
+            "api/parse",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/octet-stream",
+                },
+                body: blob,
+            }
+        );
+
+        if (!req.ok) {
+            return;
+        }
+
+        const result = await req.blob();
+        previewArea.innerHTML = await result.text();
+    } catch (error) {
+        console.log(error);
+    }
 }

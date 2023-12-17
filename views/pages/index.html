@@ -6,6 +6,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/static/output.css">
+        <link rel="stylesheet" href="/static/css/mdeditor.css">
     </head>
 
     <body class="my-10">
@@ -22,7 +23,7 @@
                 </div>
 
                 <div class="flex flex-col gap-2 mt-8">
-                    <h1 class="font-bold">Upload File</h1>
+                    <p class="font-bold">Upload File</p>
 
                     <div id="drop-area" class="hover:border-black cursor-pointer border-dashed border-2 border-slate-500 rounded py-6 px-24">
                         <form>
@@ -39,7 +40,7 @@
                 <div class="divider my-8 text-slate-500">OR</div>
 
                 <div class="flex flex-col gap-2">
-                    <h1 class="font-bold">Paste Markdown</h1>
+                    <p class="font-bold">Paste Markdown</p>
 
                     <textarea
                         id="content"
@@ -58,7 +59,7 @@
 
             <aside class="lg:w-[50%] flex flex-col gap-4">
                 <div
-                    class="flex w-full flex-col items-center justify-center rounded-lg bg-base-200 p-2 shadow-xl border border-black"
+                    class="sticky top-5 flex w-full flex-col items-center justify-center rounded-lg bg-base-200 p-2 shadow-xl border border-black"
                 >
                     <h2 class="mt-2 font-semibold">Quickshare as a Page</h2>
                     <p class="mt-1 mx-1 text-center text-xs italic">
@@ -76,7 +77,7 @@
                 </div>
 
                 <div
-                    class="flex w-full flex-col items-center justify-center rounded-lg bg-base-200 p-2 shadow-xl border border-black"
+                    class="sticky top-40 flex w-full flex-col items-center justify-center rounded-lg bg-base-200 p-2 shadow-xl border border-black"
                 >
                     <h2 class="mt-2 font-semibold">Download as HTML?</h2>
                     <p class="mt-1 mx-1 text-center text-xs italic">
@@ -96,7 +97,19 @@
             </aside>
         </main>
 
-        <script src="static/main.o.js"></script>
+        <section class="lg:ml-[140px] lg:mr-[100px] flex flex-col gap-2 mt-8">
+            <div>
+                <p class="text-3xl font-bold">Preview</h1>
+                <p class="mt-2 text-justify mb-4">
+                    See your stuff before going to the next step.
+                </p>
+            </div>
+
+            <div id="preview" class="markdown-body border border-black min-h-[300px] p-4 rounded">
+            </div>
+        </section>
+
+        <script src="static/main.js"></script>
     </body>
 
 </html>
