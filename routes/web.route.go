@@ -8,4 +8,5 @@ import (
 
 func InitWebRoute(server *fiber.App, handler handlers.WebHandler) {
 	server.Get("/", handler.SendDashboard)
+	server.Get("/login", handler.SendLogin)
 }
