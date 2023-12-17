@@ -2,7 +2,6 @@ package main
 
 import (
 	"quickshare/handlers"
-	"quickshare/repositories"
 	"quickshare/routes"
 	"quickshare/services"
 
@@ -11,14 +10,11 @@ import (
 )
 
 func InitModule(server *fiber.App, db *pgxpool.Pool) {
-	tileRepo := repositories.InitTileRepo(db)
+	utilService := services.UtilServiceImpl{}
 
-	tileService := services.TileServiceImpl{
-		Repository: tileRepo,
-	}
-
-	_ = handlers.TileHandlerImpl{TileService: &tileService}
+	apiHandler := handlers.APIHandlerImpl{UtilService: &utilService}
 	webHandler := handlers.WebHandlerImpl{}
 
+	routes.InitAPIRoute(server, &apiHandler)
 	routes.InitWebRoute(server, &webHandler)
 }
