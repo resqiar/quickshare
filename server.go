@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"quickshare/config"
 	"quickshare/database"
 
 	"github.com/gofiber/fiber/v2"
@@ -32,6 +33,10 @@ func main() {
 
 	conn := database.InitDatabase()
 	defer conn.Close()
+
+	// Initialize sessions
+	config.InitSession()
+	config.InitStateSession()
 
 	InitModule(server, conn)
 
