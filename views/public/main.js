@@ -16,6 +16,7 @@ const inputArea = document.getElementById("content");
 const contentLength = document.getElementById("content-length");
 const previewArea = document.getElementById("preview");
 const downloadBtn = document.getElementById("download-button");
+const shareBtn = document.getElementById("share-button");
 
 dropzoneArea.addEventListener("click", () => hiddenDropzone.click());
 hiddenDropzone.addEventListener("change", (e) => handleDrop(e, true));
@@ -30,6 +31,7 @@ inputArea.addEventListener("input", debouncedPreview);
 dropzoneArea.addEventListener("drop", (e) => handleDrop(e, false));
 dropzoneArea.addEventListener("drop", (e) => handleDrop(e, false));
 downloadBtn.addEventListener("click", handleDownload);
+shareBtn.addEventListener("click", handleShare);
 
 const all_events = ["dragenter", "dragover", "dragleave", "drop"];
 const enter_events = ["dragenter", "dragover"];
@@ -134,4 +136,32 @@ function handleDownload() {
 
     URL.revokeObjectURL(blobURL);
     link.remove();
+}
+
+async function handleShare() {
+    try {
+        const req = await fetch(
+            "api/share",
+            {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    title: "The Journey of Improving Performance",
+                    content: content
+                })
+            }
+        );
+
+        if (!req.ok) {
+            return;
+        }
+
+        const result = await req.text();
+        window.location.replace(`/${result}`);
+    } catch (error) {
+        console.log(error);
+    }
 }

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>Post</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/static/output.css">
+        <link rel="stylesheet" href="/static/css/mdeditor.css">
+    </head>
+
+    <body class="mb-10">
+        {{ template "Navbar" . }}
+
+        <main class="mx-4 mb-6 lg:mx-24 flex flex-col lg:flex-row justify-between">
+            <div id="preview" class="markdown-body min-h-[300px] p-4 rounded">
+                {{ .Content }}
+            </div>
+        </main>
+    </body>
+
+</html>

@@ -28,7 +28,7 @@ func (repo *UserRepoImpl) CreateUser(user *entities.User) (string, error) {
 
 	SQL := "INSERT INTO users(username, email, bio, picture_url) VALUES ($1, $2, $3, $4) RETURNING id;"
 	row := repo.db.QueryRow(context.Background(), SQL, user.Username, user.Email, "", user.PictureURL)
-	if err := row.Scan(target.ID); err != nil {
+	if err := row.Scan(&target.ID); err != nil {
 		return "", err
 	}
 

@@ -3,8 +3,7 @@ package entities
 import "time"
 
 type Post struct {
-	ID   string
-	Slug string
+	ID string
 
 	CreatedAt time.Time
 	UpdatedAt time.Time
