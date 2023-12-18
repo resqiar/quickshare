@@ -8,7 +8,7 @@ import (
 
 type PostService interface {
 	CreatePost(input *inputs.CreatePostInput, userId string) (string, error)
-	FindPostByID(id string) (*entities.Post, error)
+	FindPostByID(id string) (*entities.JoinPost, error)
 	FindPostsByAuthor(authorId string) (*[]entities.Post, error)
 }
 
@@ -25,7 +25,7 @@ func (s *PostServiceImpl) CreatePost(input *inputs.CreatePostInput, userId strin
 	return result, nil
 }
 
-func (s *PostServiceImpl) FindPostByID(id string) (*entities.Post, error) {
+func (s *PostServiceImpl) FindPostByID(id string) (*entities.JoinPost, error) {
 	result, err := s.Repository.FindByID(id)
 	if err != nil {
 		return nil, err

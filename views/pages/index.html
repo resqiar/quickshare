@@ -25,6 +25,18 @@
                 </div>
 
                 <div class="flex flex-col gap-2 mt-8">
+                    <p class="font-bold">Title</p>
+
+                    <input id="title" type="text" placeholder="Title of the page goes here" class="input input-bordered input-primary w-full" />
+
+                    <label class="label" for="title">
+                        <p class="label-text-alt">
+                            Only required if you want to share it as a page
+                        </p>
+                    </label>
+                </div>
+
+                <div class="flex flex-col gap-2 mt-4">
                     <p class="font-bold">Upload File</p>
 
                     <div id="drop-area" class="hover:border-black cursor-pointer border-dashed border-2 border-slate-500 rounded py-6 px-24">
@@ -93,7 +105,7 @@
                             id="download-button"
                             class="group btn btn-sm btn-outline btn-primary w-full gap-2 rounded-full text-sm font-normal normal-case"
                         >
-                            Download to
+                            Download as
                             <span class="font-semibold group-hover:text-amber-300">HTML</span>
                         </button>
                     </div>

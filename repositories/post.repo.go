@@ -20,7 +20,7 @@ func InitPostRepo(db *pgxpool.Pool) PostRepo {
 
 type PostRepo interface {
 	CreatePost(input *inputs.CreatePostInput, userId string) (string, error)
-	FindByID(id string) (*entities.Post, error)
+	FindByID(id string) (*entities.JoinPost, error)
 	FindAllByAuthor(authorId string) (*[]entities.Post, error)
 }
 
@@ -36,16 +36,17 @@ func (repo *PostRepoImpl) CreatePost(input *inputs.CreatePostInput, userId strin
 	return target.ID, nil
 }
 
-func (repo *PostRepoImpl) FindByID(id string) (*entities.Post, error) {
-	var target entities.Post
+func (repo *PostRepoImpl) FindByID(id string) (*entities.JoinPost, error) {
+	var target entities.JoinPost
 
-	SQL := "SELECT id, title, content, author_id FROM posts WHERE id = $1;"
+	SQL := "SELECT p.id, p.title, p.content, p.author_id, u.username FROM posts AS p JOIN users AS u ON p.author_id = u.id WHERE p.id = $1;"
 	row := repo.db.QueryRow(context.Background(), SQL, id)
 	if err := row.Scan(
 		&target.ID,
 		&target.Title,
 		&target.Content,
 		&target.AuthorID,
+		&target.Username,
 	); err != nil {
 		return nil, err
 	}

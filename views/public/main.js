@@ -7,12 +7,14 @@ function debounce(func, timeout) {
 }
 
 let content = "";
+let title = "";
 let downloadable = null;
 
 const dropzoneArea = document.getElementById("drop-area");
 const hiddenDropzone = document.getElementById("file-input");
 const errorDropzone = document.getElementById("dropzone-error");
 const inputArea = document.getElementById("content");
+const inputTitle = document.getElementById("title");
 const contentLength = document.getElementById("content-length");
 const previewArea = document.getElementById("preview");
 const downloadBtn = document.getElementById("download-button");
@@ -25,6 +27,7 @@ inputArea.addEventListener("input", () => {
     content = inputArea.value;
     contentLength.innerText = content.length;
 });
+inputTitle.addEventListener("input", () => (title = inputTitle.value));
 
 let debouncedPreview = debounce(() => handlePreview(), 300);
 inputArea.addEventListener("input", debouncedPreview);
@@ -139,6 +142,8 @@ function handleDownload() {
 }
 
 async function handleShare() {
+    if (!content || !title) return;
+
     try {
         const req = await fetch(
             "api/share",
@@ -149,7 +154,7 @@ async function handleShare() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    title: "The Journey of Improving Performance",
+                    title: title,
                     content: content
                 })
             }
