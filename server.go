@@ -50,7 +50,7 @@ func main() {
 			log.Fatal(err)
 		}
 	} else {
-		if err := server.ListenTLS(":443", "./cert.pem", "./cert.key"); err != nil {
+		if err := server.ListenTLS(":443", os.Getenv("PUBLIC_CERT_PATH"), os.Getenv("PRIVATE_CERT_PATH")); err != nil {
 			log.Fatal(err)
 		}
 	}
