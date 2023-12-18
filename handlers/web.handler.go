@@ -12,6 +12,7 @@ type WebHandler interface {
 	SendDashboard(c *fiber.Ctx) error
 	SendLogin(c *fiber.Ctx) error
 	SendPost(c *fiber.Ctx) error
+	SendPosts(c *fiber.Ctx) error
 }
 
 type WebHandlerImpl struct {
@@ -39,6 +40,12 @@ func (h *WebHandlerImpl) SendLogin(c *fiber.Ctx) error {
 }
 
 func (h *WebHandlerImpl) SendPost(c *fiber.Ctx) error {
+	userID := c.Locals("userID")
+	var user *entities.User
+	if userID != nil {
+		user, _ = h.UserService.FindUserByID(userID.(string))
+	}
+
 	postId := c.Params("id")
 	if postId == "" {
 		return c.SendStatus(fiber.StatusBadRequest)
@@ -51,7 +58,27 @@ func (h *WebHandlerImpl) SendPost(c *fiber.Ctx) error {
 
 	parsed := template.HTML(h.UtilService.ParseMD([]byte(post.Content)))
 	return c.Render("pages/post", fiber.Map{
+		"User":    user,
 		"Post":    post,
 		"Content": parsed,
+	})
+}
+
+func (h *WebHandlerImpl) SendPosts(c *fiber.Ctx) error {
+	userID := c.Locals("userID")
+	if userID == nil {
+		return c.SendStatus(fiber.StatusUnauthorized)
+	}
+
+	user, _ := h.UserService.FindUserByID(userID.(string))
+
+	posts, err := h.PostService.FindPostsByAuthor(userID.(string))
+	if err != nil {
+		return c.SendStatus(fiber.StatusNotFound)
+	}
+
+	return c.Render("pages/current-posts", fiber.Map{
+		"User":  user,
+		"Posts": posts,
 	})
 }

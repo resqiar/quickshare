@@ -1,6 +1,7 @@
 package config
 
 import (
+	"quickshare/database"
 	"time"
 
 	"github.com/gofiber/fiber/v2/middleware/session"
@@ -15,6 +16,7 @@ func InitSession() {
 		CookieHTTPOnly: true,
 		CookieSecure:   true,
 		CookiePath:     "/",
+		Storage:        database.RedisStore,
 	})
 }
 
@@ -25,5 +27,6 @@ func InitStateSession() {
 		CookieHTTPOnly: true,
 		CookieSecure:   true,
 		CookiePath:     "/",
+		Storage:        database.RedisStore,
 	})
 }

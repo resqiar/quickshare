@@ -34,6 +34,9 @@ func main() {
 	conn := database.InitDatabase()
 	defer conn.Close()
 
+	// Init redis
+	database.InitRedis()
+
 	// Initialize sessions
 	config.InitSession()
 	config.InitStateSession()

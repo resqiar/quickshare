@@ -21,6 +21,7 @@ func InitPostRepo(db *pgxpool.Pool) PostRepo {
 type PostRepo interface {
 	CreatePost(input *inputs.CreatePostInput, userId string) (string, error)
 	FindByID(id string) (*entities.Post, error)
+	FindAllByAuthor(authorId string) (*[]entities.Post, error)
 }
 
 func (repo *PostRepoImpl) CreatePost(input *inputs.CreatePostInput, userId string) (string, error) {
@@ -47,6 +48,34 @@ func (repo *PostRepoImpl) FindByID(id string) (*entities.Post, error) {
 		&target.AuthorID,
 	); err != nil {
 		return nil, err
+	}
+
+	return &target, nil
+}
+
+func (repo *PostRepoImpl) FindAllByAuthor(authorId string) (*[]entities.Post, error) {
+	var target []entities.Post
+
+	SQL := "SELECT id, title, content, created_at FROM posts WHERE author_id = $1;"
+	rows, err := repo.db.Query(context.Background(), SQL, authorId)
+	defer rows.Close()
+	if err != nil {
+		return nil, err
+	}
+
+	for rows.Next() {
+		var post entities.Post
+
+		if err := rows.Scan(
+			&post.ID,
+			&post.Title,
+			&post.Content,
+			&post.CreatedAt,
+		); err != nil {
+			return nil, err
+		}
+
+		target = append(target, post)
 	}
 
 	return &target, nil

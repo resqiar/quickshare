@@ -10,5 +10,6 @@ import (
 func InitWebRoute(server *fiber.App, handler handlers.WebHandler) {
 	server.Get("/", middlewares.LooseRoute, handler.SendDashboard)
 	server.Get("/login", handler.SendLogin)
-	server.Get("/:id", handler.SendPost)
+	server.Get("/u/:id", middlewares.LooseRoute, handler.SendPosts)
+	server.Get("/:id", middlewares.LooseRoute, handler.SendPost)
 }

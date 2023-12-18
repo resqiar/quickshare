@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 
+	redis "github.com/gofiber/storage/redis/v2"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -21,4 +22,15 @@ func InitDatabase() *pgxpool.Pool {
 	}
 
 	return db
+}
+
+var RedisStore *redis.Storage
+
+func InitRedis() {
+	REDIS_URL := os.Getenv("REDIS_URL")
+
+	RedisStore = redis.New(redis.Config{
+		URL:   REDIS_URL,
+		Reset: false,
+	})
 }
