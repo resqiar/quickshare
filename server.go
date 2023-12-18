@@ -6,6 +6,7 @@ import (
 	"os"
 	"quickshare/config"
 	"quickshare/database"
+	"quickshare/modules"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html/v2"
@@ -41,7 +42,7 @@ func main() {
 	config.InitSession()
 	config.InitStateSession()
 
-	InitModule(server, conn)
+	modules.InitModule(server, conn)
 
 	PORT := fmt.Sprintf(":%s", os.Getenv("PORT"))
 	if err := server.Listen(PORT); err != nil {
