@@ -45,7 +45,13 @@ func main() {
 	modules.InitModule(server, conn)
 
 	PORT := fmt.Sprintf(":%s", os.Getenv("PORT"))
-	if err := server.Listen(PORT); err != nil {
-		log.Fatal(err)
+	if os.Getenv("ENV") != "prod" {
+		if err := server.Listen(PORT); err != nil {
+			log.Fatal(err)
+		}
+	} else {
+		if err := server.ListenTLS(":443", "./cert.pem", "./cert.key"); err != nil {
+			log.Fatal(err)
+		}
 	}
 }
