@@ -1,6 +1,6 @@
 module quickshare
 
-go 1.21.4
+go 1.22.0
 
 require (
 	github.com/alecthomas/chroma/v2 v2.12.0
