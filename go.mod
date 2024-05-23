@@ -3,7 +3,7 @@ module quickshare
 go 1.21.4
 
 require (
-	github.com/alecthomas/chroma/v2 v2.12.0
+	github.com/alecthomas/chroma/v2 v2.14.0
 	github.com/gofiber/fiber/v2 v2.51.0
 	github.com/gofiber/storage/redis/v2 v2.0.3
 	github.com/gofiber/template/html/v2 v2.0.5
@@ -24,7 +24,7 @@ require (
 	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
-	github.com/dlclark/regexp2 v1.10.0 // indirect
+	github.com/dlclark/regexp2 v1.11.0 // indirect
 	github.com/gofiber/template v1.8.2 // indirect
 	github.com/gofiber/utils v1.1.0 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
